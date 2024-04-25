@@ -1,0 +1,190 @@
+  <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Volunteer Registration</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        #age {
+            width: calc(102% - 10px);
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            outline: none;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+            
+            
+        }
+
+        /* CSS for Gender dropdown */
+        #gender {
+            width: calc(105% - 22px); /* Adjust width to fit within container */
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            outline: none;
+            font-size: 16px;
+        }
+
+        /* Increase the font size of labels */
+        label {
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+        
+</style>
+
+</head>
+<body>
+    <div class="container">
+        <h1>Volunteer Registration</h1>
+        <form id="volunteerForm">
+            <div>
+                <label for="first_name">First Name:</label>
+                <input type="text" id="first_name" name="first_name" required>
+            </div>
+            <div>
+                <label for="last_name">Last Name:</label>
+                <input type="text" id="last_name" name="last_name" required>
+            </div>
+            <div>
+                <label for="age">Age:</label>
+                <select id="age" name="age" required>
+                    <option value="under_18">Under 18 years old</option>
+                    <option value="18_to_24">18 to 24</option>
+                    <option value="25_to_34">25 to 34</option>
+                    <option value="35_to_44">35 to 44</option>
+                    <option value="45_to_54">45 to 54</option>
+                    <option value="55_to_64">55 to 64</option>
+                    <option value="65_plus">65+ years old</option>
+                    <option value="prefer_not_to_answer">Prefer not to answer</option>
+                </select>
+            </div>
+            <div>
+                <label for="gender">Gender:</label>
+                <select id="gender" name="gender" required>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                    <option value="none">Prefer not to answer</option>
+                </select>
+            </div>
+            <div>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div>
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div>
+                <label for="city">City:</label>
+                <input type="text" id="city" name="city" required>
+            </div>
+            <div>
+                <label for="skills">Skills:</label>
+                <input type="text" id="skills" name="skills" required>
+            </div>
+            <div>
+                <label for="cause">Cause:</label>
+                <input type="text" id="cause" name="cause" required>
+            </div>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</body>
+<script>
+    // JavaScript to set the initial value of dropdowns to empty
+    document.addEventListener("DOMContentLoaded", function() {
+        document.getElementById("age").selectedIndex = -1; // Set selectedIndex to -1 to display no option selected
+        document.getElementById("gender").selectedIndex = -1; // Set selectedIndex to -1 to display no option selected
+    });
+
+    // JavaScript to handle form submission
+    document.addEventListener("DOMContentLoaded", function() {
+        const form = document.getElementById("volunteerForm");
+
+        form.addEventListener("submit", async function(event) {
+            event.preventDefault();
+
+            // Get form data
+            const formData = new FormData(form);
+
+            // Send form data to backend
+            try {
+                const response = await fetch("/register/volunteer", {
+                    method: "POST",
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    throw new Error("Failed to submit form");
+                }
+
+                // Optionally, handle successful response
+                alert("Volunteer registered successfully!");
+            } catch (error) {
+                console.error("Error:", error.message);
+                // Optionally, display error message to user
+                alert("An error occurred while registering. Please try again later.");
+            }
+        });
+    });
+</script>
+</html>
